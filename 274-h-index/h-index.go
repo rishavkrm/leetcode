@@ -1,30 +1,17 @@
 func hIndex(citations []int) int {
-    if nPositives(citations) == 0{
-        return 0
+    // 0, 1, 3, 5, 6
+    sort.Ints(citations)
+    n := len(citations)
+    if n == 1 && citations[0] > 0{
+        return 1
     }
-    hIndex := 1
-    for i := 1; i < len(citations); i++{
-        subtractOne(citations)
-        if nPositives(citations) > hIndex{
+    hIndex := 0
+    for i := 0; i < n; i++{
+        if citations[n-i-1] >= hIndex+1{
             hIndex += 1
+        }else{
+            break
         }
     }
-    return hIndex 
-    
-}
-
-func nPositives(arr []int) int{
-    count := 0
-    for _, i := range(arr){
-        if i > 0{
-            count += 1
-        } 
-    }
-    return count
-}
-
-func subtractOne(arr []int){
-    for i,_ := range(arr){
-        arr[i] = arr[i]-1
-    }
+    return hIndex
 }
