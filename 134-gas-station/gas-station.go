@@ -7,7 +7,6 @@ func canCompleteCircuit(gas []int, cost []int) int {
     curr := 0
     for i := range(len(cost)){
         curr += (gas[i] - cost[i])
-        fmt.Println(curr, min)
         if curr < min{
             res = i
             min = curr
