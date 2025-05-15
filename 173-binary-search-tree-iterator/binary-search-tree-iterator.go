@@ -7,46 +7,42 @@
  * }
  */
 type BSTIterator struct {
-    arr []int
-    pointer int
+    stack []*TreeNode
 }
 
 
 func Constructor(root *TreeNode) BSTIterator {
-    arr := make([]int, 0)
-    arr = inorder(root, arr)
-    fmt.Println(arr)
+    stack := make([]*TreeNode, 0)
+    curr := root
+    for curr != nil{
+        stack = append(stack, curr)
+        curr = curr.Left
+    }
     return BSTIterator{
-        arr : arr,
-        pointer: 0,
+        stack : stack,
     }
 
 }
 
 
 func (this *BSTIterator) Next() int {
-    x := this.arr[this.pointer]
-    this.pointer += 1
-    return x
+    stack := this.stack
+    popped := stack[len(stack)-1]
+    stack = stack[:len(stack)-1]
+    curr := popped.Right
+    for curr != nil{
+        stack = append(stack, curr)
+        curr = curr.Left
+    }
+    this.stack = stack
+    return popped.Val
 }
 
 
 func (this *BSTIterator) HasNext() bool {
-    if this.pointer < len(this.arr){
-        return true
-    } 
-    return false
+    return len(this.stack) != 0
 }
 
-func inorder(node *TreeNode, arr []int)[]int{
-    if node == nil{
-        return arr
-    }
-    arr = inorder(node.Left, arr)
-    arr = append(arr, node.Val)
-    arr = inorder(node.Right, arr)
-    return arr
-}
 
 /**
  * Your BSTIterator object will be instantiated and called as such:
@@ -54,3 +50,5 @@ func inorder(node *TreeNode, arr []int)[]int{
  * param_1 := obj.Next();
  * param_2 := obj.HasNext();
  */
+
+ // []
