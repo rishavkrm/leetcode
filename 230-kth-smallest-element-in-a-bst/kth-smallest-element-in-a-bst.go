@@ -23,7 +23,6 @@ func helper(node *TreeNode, k int, i *int) int{
     } 
     *i = *i+1
     y := helper(node.Right, k, i)
-    fmt.Println(x, y)
     if x >= 0{
         return x
     }
