@@ -21,7 +21,6 @@ func isValidBST(root *TreeNode) bool {
         arr = append(arr, popped.Val)
         curr = popped.Right
     }
-    fmt.Println(arr)
     return isStrictlyIncreasing(arr)
 }
 
