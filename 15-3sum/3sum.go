@@ -1,3 +1,11 @@
+// 1. sort the array
+// 2. use two pointers for left and right
+// 3. iterate over the array
+// 4. if curr_num + left + right < target, then left += 1
+// 5. if curr_num + left + right > target, then right -= 1
+// 6. else curr_num + left + right == target, then add into the array
+// 7. increase left until it is not equal to current left, otherwise it will be generate duplicate pairs  
+
 func threeSum(array []int) [][]int {
 	res := make([][]int, 0)
 	// sort the array
