@@ -10,8 +10,8 @@ func reverseBetween(head *ListNode, l int, r int) *ListNode {
 	var c2 *ListNode
 	var prev *ListNode
 	curr := head
-    xx := 1
-    yy := 1
+	xx := 1
+	yy := 1
 	for curr != nil && (c1 == nil || c2 == nil) {
 		if xx == l {
 			c1 = prev
@@ -22,15 +22,12 @@ func reverseBetween(head *ListNode, l int, r int) *ListNode {
 		}
 		prev = curr
 		curr = curr.Next
-        xx += 1
-        yy += 1
-	}
-	if curr == nil {
-		return head
+		xx += 1
+		yy += 1
 	}
 	if c1 == nil {
-        temp2 := head
-        head = curr        
+		temp2 := head
+		head = curr
 		curr = temp2
 	} else {
 		curr = c1.Next
