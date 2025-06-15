@@ -78,6 +78,7 @@
 						this.Tail.Next = nil
 					}
 					delete(this.Dict, currTail.Val)
+                    delete(this.Address, currTail.Val)
 				}
 
 			} else {
