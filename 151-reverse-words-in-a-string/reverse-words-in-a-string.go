@@ -15,7 +15,7 @@ func reverseWords(s string) string {
 		}
 		res += " "
 	}
-	k := len(res)-1
+	k := len(res) - 1
 	for k >= 0 {
 		if res[k] == 32 {
 			k -= 1
@@ -23,5 +23,5 @@ func reverseWords(s string) string {
 			break
 		}
 	}
-	return res[0:k+1]
+	return res[0 : k+1]
 }
