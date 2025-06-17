@@ -3,7 +3,6 @@ func fourSum(nums []int, target int) [][]int {
 		return nums[a] < nums[b]
 	})
 	res := make([][]int, 0)
-	fmt.Println(nums)
 	i := 0
 	for i < len(nums) {
 		j := i + 1
