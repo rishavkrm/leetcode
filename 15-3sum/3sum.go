@@ -1,39 +1,33 @@
-// 1. sort the array
-// 2. use two pointers for left and right
-// 3. iterate over the array
-// 4. if curr_num + left + right < target, then left += 1
-// 5. if curr_num + left + right > target, then right -= 1
-// 6. else curr_num + left + right == target, then add into the array
-// 7. increase left until it is not equal to current left, otherwise it will be generate duplicate pairs  
-
-func threeSum(array []int) [][]int {
-	res := make([][]int, 0)
-	// sort the array
-	sort.Slice(array, func(i, j int) bool {
-		return array[i] < array[j]
-	})
+func threeSum(nums []int) [][]int {
 	target := 0
-	for i := 0; i < len(array); i++ {
+	sort.Slice(nums, func(a, b int) bool {
+		return nums[a] < nums[b]
+	})
+	res := make([][]int, 0)
+	i := 0
+	for i < len(nums) {
 		left := i + 1
-		right := len(array) - 1
-		if i > 0 && array[i] == array[i-1] {
-			continue
-		}
+		right := len(nums) - 1
 		for left < right {
-			sum := array[i] + array[left] + array[right]
+			sum := nums[i] + nums[left] + nums[right]
 			if sum > target {
 				right -= 1
 			} else if sum < target {
 				left += 1
 			} else {
-				res = append(res, []int{array[i], array[left], array[right]})
-                curr := array[left]
-				for left < right && array[left] == curr{
-                    left += 1
-                } 
-				right -= 1
+				res = append(res, []int{nums[i], nums[left], nums[right]})
+				// right -= 1
+				y := nums[left]
+				for left < right && nums[left] == y {
+					left += 1
+				}
 			}
 		}
+        y := nums[i]
+        for i < len(nums) && nums[i] == y {
+			i += 1
+        } 
+
 	}
 	return res
 }
