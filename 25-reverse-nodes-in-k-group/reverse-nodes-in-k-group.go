@@ -12,27 +12,27 @@ func reverseKGroup(head *ListNode, k int) *ListNode {
 	res := head
 	prevHead := &ListNode{}
 	for j := range p { // p = 0, j = 1
-		x := curr //3
-		y := &ListNode{}
-		z := &ListNode{}
+		currHead := curr        // curr iteration head
+		nextHead := &ListNode{} // next iteration head
+		currTail := &ListNode{} // curr iteration tail
 		prev := &ListNode{}
 		for i := 0; i < k; i++ { // 0
 			next := curr.Next // 4 5
-			y = next          // 4 5
+			nextHead = next   // 4 5
 			curr.Next = prev  // 4->3->nil
 			prev = curr       // 3 4
-			z = curr          // 3 4
+			currTail = curr          // 3 4
 			curr = next       // 4 5
 
 		}
-		if j == 0 {
+		if j == 0 { // make tail of 1st iteration as head
 			res = prev
 		}
-		x.Next = y // 4->3->5
+		currHead.Next = nextHead // curr iteration head bacame tail now, its next = next iteration head
 		if prevHead != nil {
-			prevHead.Next = z
+			prevHead.Next = currTail 
 		}
-        prevHead = x
+		prevHead = currHead
 	}
 	return res
 }
