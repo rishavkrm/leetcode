@@ -8,11 +8,11 @@ func exist(board [][]byte, word string) bool {
 		}
 	}
 	visited := make([][]bool, len(board))
-
+	for i := 0; i < len(board); i++ {
+		visited[i] = make([]bool, len(board[0]))
+	}
 	for i := range heads {
-		for i := 0; i < len(board); i++ {
-			visited[i] = make([]bool, len(board[0]))
-		}
+
 		res := dfs(board, word, visited, heads[i][0], heads[i][1], "")
 		if res == true {
 			return res
