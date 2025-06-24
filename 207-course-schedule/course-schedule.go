@@ -1,7 +1,7 @@
 func canFinish(numCourses int, prerequisites [][]int) bool {
 	graph := make(map[int][]int)
 	degrees := make(map[int]int)
-	ts := make([]int, 0)
+	count := 0
 	for i := 0; i < numCourses; i++ {
 		graph[i] = make([]int, 0)
 		degrees[i] = 0
@@ -24,12 +24,11 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 				queue = append(queue, arr[j])
 			}
 		}
-		ts = append(ts, queue[0])
+		count += 1
 		queue = queue[1:]
 
 	}
-	fmt.Println(ts)
-	if len(ts) < numCourses {
+	if count < numCourses {
 		return false
 	}
 	return true
