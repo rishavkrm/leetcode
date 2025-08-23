@@ -1,6 +1,6 @@
 func subsetsWithDup(nums []int) [][]int {
 	sort.Slice(nums, func(i int, j int) bool {
-		return nums[i] > nums[j]
+		return nums[i] < nums[j]
 	})
 	result := make([][]int, 0)
 	curr := make([]int, 0)
