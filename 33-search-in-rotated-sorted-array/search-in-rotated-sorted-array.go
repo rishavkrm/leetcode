@@ -1,8 +1,5 @@
 func search(nums []int, target int) int {
 	x := findPivvotIndex(nums)
-    if target == nums[0]{
-        return 0
-    }
 	if target > nums[len(nums)-1] {
 		return binarySearch(nums, target, 0, x)
 	}
