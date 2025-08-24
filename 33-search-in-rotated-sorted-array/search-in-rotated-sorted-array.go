@@ -1,58 +1,36 @@
 func search(nums []int, target int) int {
-	if len(nums) == 1 {
-		if nums[0] == target {
-			return 0
-		}
-		return -1
+	x := findPivvotIndex(nums)
+    fmt.Println(x)
+    if target == nums[0]{
+        return 0
+    }
+	if target > nums[len(nums)-1] {
+		return binarySearch(nums, target, 0, x)
 	}
-	i := 0
-	j := len(nums) - 1
-	// 1f 1st element is lesser than last element that means no rotation
-	if nums[i] < nums[j] {
-		return binarySearch(nums, target, i, j)
-	}
-	// if we draw a graph it will be like a increasing line then dip at pivvot index
-	// and then inceasing again but it wont even cross the 0th element again
-	// let's find pivvot index now
-	var pivvotIndex int
-	for i <= j {
-		mid := (i + j) / 2
-		if isPivvotIndex(nums, mid) {
-			pivvotIndex = mid
-			break
-		}
-		if nums[mid] >= nums[0] {
-			// left half
-			i = mid + 1
-		} else {
-			// right half
-			j = mid - 1
-		}
-	}
-	i = 0
-	j = len(nums) - 1
-	if target >= nums[0] {
-		j = pivvotIndex - 1
-	} else {
-		i = pivvotIndex
-	}
-	return binarySearch(nums, target, i, j)
-
+	return binarySearch(nums, target, x, len(nums)-1)
 }
 
-func isPivvotIndex(nums []int, index int) bool {
-	if index == 0 {
-		return false
+func findPivvotIndex(nums []int) int {
+	left := 0
+	right := len(nums) - 1
+	for left < right {
+		mid := left + (right-left)/2
+		if nums[mid] > nums[len(nums)-1] {
+			left = mid + 1
+		} else if nums[mid] < nums[len(nums)-1] {
+			right = mid
+		} else {
+			right = right - 1
+		}
 	}
-	if nums[index-1] > nums[index] {
-		return true
-	}
-	return false
+	return left
+
 }
 
 func binarySearch(nums []int, target int, i int, j int) int {
+    fmt.Println(i, j)
 	for i <= j {
-		mid := (i + j) / 2
+		mid := i + (j-i)/2
 		if nums[mid] == target {
 			return mid
 		} else if nums[mid] < target {
