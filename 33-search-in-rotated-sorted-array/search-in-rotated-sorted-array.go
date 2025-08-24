@@ -1,6 +1,5 @@
 func search(nums []int, target int) int {
 	x := findPivvotIndex(nums)
-    fmt.Println(x)
     if target == nums[0]{
         return 0
     }
@@ -17,10 +16,8 @@ func findPivvotIndex(nums []int) int {
 		mid := left + (right-left)/2
 		if nums[mid] > nums[len(nums)-1] {
 			left = mid + 1
-		} else if nums[mid] < nums[len(nums)-1] {
-			right = mid
 		} else {
-			right = right - 1
+			right = mid
 		}
 	}
 	return left
@@ -28,7 +25,6 @@ func findPivvotIndex(nums []int) int {
 }
 
 func binarySearch(nums []int, target int, i int, j int) int {
-    fmt.Println(i, j)
 	for i <= j {
 		mid := i + (j-i)/2
 		if nums[mid] == target {
