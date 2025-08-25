@@ -1,60 +1,47 @@
+// [["A","B","C","E"],
+// ["S","F","E","S"],
+// ["A","D","E","E"]]
+
 func exist(board [][]byte, word string) bool {
-	heads := make([][]int, 0)
-	for i := 0; i < len(board); i++ {
-		for j := 0; j < len(board[0]); j++ {
-			if board[i][j] == word[0] {
-				heads = append(heads, []int{i, j})
-			}
-		}
-	}
-	visited := make([][]bool, len(board))
-	for i := 0; i < len(board); i++ {
-		visited[i] = make([]bool, len(board[0]))
-	}
-	for i := range heads {
-
-		res := dfs(board, word, visited, heads[i][0], heads[i][1], "")
-		if res == true {
-			return res
-		}
-	}
-
-	return false
-
-}
-func dfs(board [][]byte, word string, visited [][]bool, row, col int, curr string) bool {
-	if row >= len(board) || row < 0 || col >= len(board[0]) || col < 0 {
-		return false
-	}
-	if !visited[row][col] {
-		visited[row][col] = true
-		curr += string(board[row][col])
-
-		if curr == word {
-			return true
-		}
-		if len(curr) >= len(word) {
-			visited[row][col] = false
-			return false
-		}
-		if word[:len(curr)] != curr {
-			visited[row][col] = false
-			return false
-		}
-		directions := [][]int{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}
-		for i := range len(directions) {
-			d := directions[i]
-			res := dfs(board, word, visited, row+d[0], col+d[1], curr)
-			if res == true {
+	for i := range len(board) {
+		for j := range len(board[0]) {
+			if helper(board, word, i, j, 0,getVisited(board)) {
 				return true
 			}
 		}
-		visited[row][col] = false
-		return false
 	}
 	return false
-
 }
 
-// a, b
-// c, d
+func helper(board [][]byte, word string, i int, j int, k int, visited *[][]bool) bool {
+	if k == len(word) {
+		return true
+	}
+	if i < 0 || i >= len(board) || j < 0 || j >= len(board[0]) {
+		return false
+	}
+	if board[i][j] != word[k] {
+		return false
+	}
+	if (*visited)[i][j] {
+		return false
+	}
+	(*visited)[i][j] = true
+	options := [][]int{{-1, 0}, {1, 0}, {0, 1}, {0, -1}}
+	for _, option := range options {
+		if helper(board, word, i+option[0], j+option[1], k+1, visited) {
+			return true
+		}
+
+	}
+	(*visited)[i][j] = false
+	return false
+}
+
+func getVisited(board [][]byte) *[][]bool {
+	visited := make([][]bool, len(board))
+	for i := range visited {
+		visited[i] = make([]bool, len(board[0]))
+	}
+	return &visited
+}
