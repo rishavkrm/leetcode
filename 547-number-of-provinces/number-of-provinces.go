@@ -37,7 +37,7 @@ func union(i int, j int, rank *[]int, parent *[]int) {
 	} else if (*rank)[parentI] < (*rank)[parentJ] {
 		(*parent)[parentI] = parentJ
 	} else {
-		(*parent)[parentI] = j
+		(*parent)[parentI] = parentJ
 		(*rank)[parentJ] += 1
 	}
 }
