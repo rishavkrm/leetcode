@@ -24,7 +24,6 @@ func numIslands(grid [][]byte) int {
 			}
 		}
 	}
-	fmt.Println(parent)
 	mp := map[int]int{}
 	for i := range len(grid) {
 		for j := range len(grid[0]) {
