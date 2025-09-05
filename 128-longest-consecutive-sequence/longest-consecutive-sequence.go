@@ -1,10 +1,14 @@
 func longestConsecutive(nums []int) int {
 	parent := make([]int, len(nums))
-    rank := make([]int, len(nums))
+	rank := make([]int, len(nums))
 	hash := map[int]int{}
 	for i := range len(parent) {
 		parent[i] = i
-		hash[nums[i]] = i
+		_, exists := hash[nums[i]]
+		if !exists {
+			hash[nums[i]] = i
+
+		}
 	}
 	for i := 0; i < len(nums); i++ {
 		curr := nums[i]
@@ -12,29 +16,29 @@ func longestConsecutive(nums []int) int {
 		if exists {
 			union(hash[curr], hash[curr+1], &parent, &rank)
 		}
-        _, exists = hash[curr-1]
+		_, exists = hash[curr-1]
 		if exists {
 			union(hash[curr], hash[curr-1], &parent, &rank)
 		}
 	}
-    for i := 0; i < len(nums); i++ {
+	for i := 0; i < len(nums); i++ {
 		curr := nums[i]
 		_, exists := hash[curr+1]
 		if exists {
 			union(hash[curr], hash[curr+1], &parent, &rank)
 		}
-        _, exists = hash[curr-1]
+		_, exists = hash[curr-1]
 		if exists {
 			union(hash[curr], hash[curr-1], &parent, &rank)
 		}
 	}
-    maxi := 0
-    nHash := map[int]int{}
-    for _,i := range parent{
-        nHash[i] += 1
-        maxi = max(maxi, nHash[i])
-    }
-    return maxi
+	maxi := 0
+	nHash := map[int]int{}
+	for _, i := range parent {
+		nHash[i] += 1
+		maxi = max(maxi, nHash[i])
+	}
+	return maxi
 }
 
 func find(k int, parent *[]int) int {
