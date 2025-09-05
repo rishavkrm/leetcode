@@ -7,7 +7,7 @@ func numIslands(grid [][]byte) int {
 		parent[i] = i
 		rank[i] = 1
 	}
-	options := [][]int{{-1, 0}, {0, -1}, {0, 1}, {0, -1}}
+	options := [][]int{{1, 0}, {0, 1}}
 	for i := range len(grid) {
 		for j := range len(grid[0]) {
 			if grid[i][j] == '1' {
@@ -18,7 +18,6 @@ func numIslands(grid [][]byte) int {
 						index1 := getIndex(x, y, m, n)
 						index2 := getIndex(i, j, m, n)
 						union(index1, index2, &parent, &rank)
-						// break
 					}
 				}
 			}
