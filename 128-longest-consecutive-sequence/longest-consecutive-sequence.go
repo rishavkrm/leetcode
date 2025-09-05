@@ -21,21 +21,11 @@ func longestConsecutive(nums []int) int {
 			union(hash[curr], hash[curr-1], &parent, &rank)
 		}
 	}
-	for i := 0; i < len(nums); i++ {
-		curr := nums[i]
-		_, exists := hash[curr+1]
-		if exists {
-			union(hash[curr], hash[curr+1], &parent, &rank)
-		}
-		_, exists = hash[curr-1]
-		if exists {
-			union(hash[curr], hash[curr-1], &parent, &rank)
-		}
-	}
 	maxi := 0
 	nHash := map[int]int{}
 	for _, i := range parent {
-		nHash[i] += 1
+        p := find(i, &parent)
+		nHash[p] += 1
 		maxi = max(maxi, nHash[i])
 	}
 	return maxi
