@@ -50,7 +50,6 @@ func bfs(graph map[int][]int, start int, end int) int {
 	dist[start] = 0
 	curr := start
 	for len(v) != len(graph) {
-        fmt.Println(curr)
 		v[curr] = true
 		for _, nbr := range graph[curr] {
 			if !v[nbr] {
@@ -72,7 +71,6 @@ func bfs(graph map[int][]int, start int, end int) int {
         }
         curr = next
 	}
-    fmt.Println(graph)
     return dist[end]
 
 }
