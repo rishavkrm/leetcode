@@ -14,7 +14,6 @@ func maxAreaOfIsland(grid [][]int) int {
 					x := i + option[0]
 					y := j + option[1]
 					if x < m && y < n && grid[x][y] == 1 {
-                        // fmt.Println(x, y, i, j)
 						union(findIndex(x, y, m, n), findIndex(i, j, m, n), &parent, &rank)
 					}
 				}
@@ -31,7 +30,6 @@ func maxAreaOfIsland(grid [][]int) int {
 			}
 		}
 	}
-    fmt.Println(parents)
 	return maxi
 }
 
