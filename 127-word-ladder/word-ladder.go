@@ -1,11 +1,12 @@
 func ladderLength(beginWord string, endWord string, wordList []string) int {
-	hash := map[string]bool{}
-	for _, word := range wordList {
-		hash[word] = true
+	hash := map[string]int{}
+	for i, word := range wordList {
+		hash[word] = i
 	}
-	if !hash[beginWord] {
+	_, ok := hash[beginWord]
+	if !ok {
 		wordList = append(wordList, beginWord)
-		hash[beginWord] = true
+		hash[beginWord] = len(wordList) - 1
 	}
 	start := -1
 	end := -1
@@ -21,24 +22,31 @@ func ladderLength(beginWord string, endWord string, wordList []string) int {
 		return 0
 	}
 	graph := map[int][]int{}
-    for i := range len(hash){
-        graph[i] = []int{}
-    }
 	for i := range len(hash) {
-		for j := range len(hash) {
-			if i == j {
-				continue
-			}
-			if isDifferenceOne(wordList[i], wordList[j]) {
-				graph[i] = append(graph[i], j)
+		graph[i] = []int{}
+	}
+	for i := 0; i < len(wordList); i++ {
+		curr := wordList[i]
+		for x := range len(curr) {
+			for j := 'a'; j <= 'z'; j++ {
+				if curr[x] == byte(j) {
+					continue
+				}
+				s := []byte(curr)
+				s[x] = byte(j)
+				curr2 := string(s)
+                yy, ok := hash[curr2]
+				if ok {
+					graph[i] = append(graph[i], yy)
+				}
 			}
 		}
 	}
-	x :=  bfs(graph, start, end) 
-	if x == 10000000{
-        return 0
-    }
-    return x+1
+	x := bfs(graph, start, end)
+	if x == 10000000 {
+		return 0
+	}
+	return x + 1
 }
 
 func bfs(graph map[int][]int, start int, end int) int {
@@ -58,20 +66,20 @@ func bfs(graph map[int][]int, start int, end int) int {
 		}
 		min := 10000000
 		next := -1
-		for i,_ := range graph {
+		for i, _ := range graph {
 			if !v[i] {
-                if dist[i] < min{
-                    min = dist[i]
-                    next = i
-                }
+				if dist[i] < min {
+					min = dist[i]
+					next = i
+				}
 			}
 		}
-        if next == -1{
-            break
-        }
-        curr = next
+		if next == -1 {
+			break
+		}
+		curr = next
 	}
-    return dist[end]
+	return dist[end]
 
 }
 
