@@ -25,9 +25,6 @@ func possibleBipartition(n int, dislikes [][]int) bool {
 			}
 		}
 	}
-    fmt.Println(graph)
-	fmt.Println(parent)
-
 	return true
 }
 
