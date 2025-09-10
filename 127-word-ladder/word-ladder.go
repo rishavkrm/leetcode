@@ -35,7 +35,7 @@ func ladderLength(beginWord string, endWord string, wordList []string) int {
 				s := []byte(curr)
 				s[x] = byte(j)
 				curr2 := string(s)
-                yy, ok := hash[curr2]
+				yy, ok := hash[curr2]
 				if ok {
 					graph[i] = append(graph[i], yy)
 				}
@@ -43,44 +43,27 @@ func ladderLength(beginWord string, endWord string, wordList []string) int {
 		}
 	}
 	x := bfs(graph, start, end)
-	if x == 10000000 {
-		return 0
-	}
-	return x + 1
+	return x
 }
 
 func bfs(graph map[int][]int, start int, end int) int {
-	v := map[int]bool{}
+	queue := []int{start}
+	visited := map[int]bool{}
 	dist := map[int]int{}
-	for i := range len(graph) {
-		dist[i] = 10000000
+	dist[start] = 1
+    visited[start] = true
+	for len(queue) > 0 {
+		curr := queue[0]
+        queue = queue[1:]
+        for _, nbr := range graph[curr]{
+            if !visited[nbr]{
+                visited[nbr] = true
+                queue = append(queue, nbr)
+                dist[nbr] = 1 + dist[curr]
+            }
+        }
 	}
-	dist[start] = 0
-	curr := start
-	for len(v) != len(graph) {
-		v[curr] = true
-		for _, nbr := range graph[curr] {
-			if !v[nbr] {
-				dist[nbr] = min(dist[nbr], dist[curr]+1)
-			}
-		}
-		min := 10000000
-		next := -1
-		for i, _ := range graph {
-			if !v[i] {
-				if dist[i] < min {
-					min = dist[i]
-					next = i
-				}
-			}
-		}
-		if next == -1 {
-			break
-		}
-		curr = next
-	}
-	return dist[end]
-
+    return dist[end]
 }
 
 func isDifferenceOne(s1 string, s2 string) bool {
