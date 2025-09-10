@@ -1,7 +1,4 @@
 func isBipartite(graph [][]int) bool {
-	if len(graph) == 1 {
-		return true
-	}
 	parent := make([]int, len(graph))
 	rank := make([]int, len(graph))
 	for i := 0; i < len(parent); i++ {
