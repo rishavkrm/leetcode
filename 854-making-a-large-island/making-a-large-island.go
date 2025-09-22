@@ -6,6 +6,7 @@ func largestIsland(grid [][]int) int {
 	for i, _ := range parent {
 		parent[i] = i
 	}
+	count_zeros := 0
 	options := [][]int{{1, 0}, {0, 1}}
 	for i := 0; i < m; i++ {
 		for j := 0; j < n; j++ {
@@ -17,15 +18,27 @@ func largestIsland(grid [][]int) int {
 						union(findIndex(x, y, m, n), findIndex(i, j, m, n), &parent, &rank)
 					}
 				}
+			} else {
+				count_zeros += 1
 			}
 		}
 	}
+    if count_zeros == m*n{
+        return 1
+    }
 	zeros := [][]int{}
 	options2 := [][]int{{1, 0}, {0, 1}, {-1, 0}, {0, -1}}
 	for i := 0; i < m; i++ {
 		for j := 0; j < n; j++ {
 			if grid[i][j] == 0 {
-				zeros = append(zeros, []int{i, j})
+				for _, option := range options2 {
+					x := i + option[0]
+					y := j + option[1]
+					if x >= 0 && y >= 0 && x < m && y < n && grid[x][y] == 1 {
+						zeros = append(zeros, []int{i, j})
+						break
+					}
+				}
 			}
 		}
 	}
@@ -47,11 +60,11 @@ func largestIsland(grid [][]int) int {
 			x := i + option[0]
 			y := j + option[1]
 			if x >= 0 && y >= 0 && x < m && y < n && grid[x][y] == 1 {
-                ppp := find(findIndex(x, y, m, n), &parent)
-                if p_used[ppp] > 0{
-                    continue
-                }
-                p_used[ppp] = 1
+				ppp := find(findIndex(x, y, m, n), &parent)
+				if p_used[ppp] > 0 {
+					continue
+				}
+				p_used[ppp] = 1
 				curr += parents[ppp]
 			}
 		}
