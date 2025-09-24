@@ -11,21 +11,19 @@ func coinChange(coins []int, amount int) int {
 	return result
 }
 
-func helper(coins []int, amount int, index int, dp *[][]int) int {
+func helper(coins []int, amount int, i int, dp *[][]int) int {
 	if amount == 0 {
 		return 0
 	}
-	if amount < 0 || index >= len(coins) {
+	if amount < 0 || i >= len(coins) {
 		return 99999
 	}
-	if (*dp)[index][amount] != 0 {
-		return (*dp)[index][amount]
+	if (*dp)[i][amount] != 0 {
+		return (*dp)[i][amount]
 	}
-	mini := 99999
-	for i := index; i < len(coins); i++ {
-		x := 1 + helper(coins, amount-coins[i], i,dp)
-		mini = min(mini, x)
-	}
-	(*dp)[index][amount] = mini
-	return mini
+	x := 1 + helper(coins, amount-coins[i], i, dp)
+	y := helper(coins, amount, i+1, dp)
+    z := min(x, y)
+	(*dp)[i][amount] = z
+	return z
 }
