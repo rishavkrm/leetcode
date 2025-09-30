@@ -3,6 +3,11 @@ func minSteps(n int) int {
     for i := range len(dp){
         dp[i] = make([]int, n)
     }
+    for i := range len(dp){
+        for j := range len(dp[0]){
+            dp[i][j] = -1
+        }
+    }
 	return helper(n, 1, 0, dp)
 }
 
@@ -13,7 +18,7 @@ func helper(n int, curr int, copied int, dp [][]int) int {
 	if curr > n {
 		return 10000
 	}
-    if dp[curr][copied] != 0{
+    if dp[curr][copied] != -1{
         return dp[curr][copied]
     }
 	x1 := 10000
