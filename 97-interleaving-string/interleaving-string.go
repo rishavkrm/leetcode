@@ -10,13 +10,9 @@ func isInterleave(s1 string, s2 string, s3 string) bool {
 }
 
 func helper(s1 string, s2 string, s3 string, i1 int, i2 int, dp [][]int) bool {
-	// if i1 == len(s1)-1 && i2 == len(s2)-1 {
-	// 	return true
-	// }
 	i3 := i1 + i2
 	if i1 == len(s1) || i2 == len(s2) {
 		if i1 == len(s1) && i2 == len(s2) {
-            fmt.Println("Yes")
 			return true
 		}
 		if i1 == len(s1) {
